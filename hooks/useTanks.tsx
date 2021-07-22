@@ -9,7 +9,7 @@ export const TankProvider = ({ children }) => {
   const [tanks, setTanks] = useState<TankState[]>([]);
 
   useEffect(() => {
-    const query = firestore.collection('tanks').limit(30);
+    const query = firestore.collection('tanks'); //.limit(30);
     query.onSnapshot((snapshot) => {
       console.log({ snapshot, changes: snapshot.docChanges() });
 

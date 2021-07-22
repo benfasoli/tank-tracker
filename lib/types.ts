@@ -1,5 +1,3 @@
-import firebase from 'firebase/app';
-
 export type UserRole = 'pending' | 'read' | 'read+write' | 'read+write+admin';
 
 export type UserPermissions = {

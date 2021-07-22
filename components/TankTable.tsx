@@ -1,8 +1,4 @@
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  UserIcon,
-} from '@heroicons/react/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { useEffect, useMemo, useState } from 'react';
 
 import StatusDot from './StatusDot';
@@ -10,12 +6,11 @@ import StatusPill from './StatusPill';
 import Table from './Table';
 import TableBody from './TableBody';
 import TableData from './TableData';
-import TableFoot from './TableFoot';
 import TableHead from './TableHead';
 import TableHeadData from './TableHeadData';
 import TableRow from './TableRow';
 import { formatDate } from '../lib/date';
-import { useTanks } from '../hooks/tanks';
+import { useTanks } from '../hooks/useTanks';
 
 type Props = {
   searchQuery?: string;

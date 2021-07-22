@@ -3,16 +3,13 @@ import { ReactNode, useState } from 'react';
 import Button from '../components/Button';
 import Layout from '../components/Layout';
 import Link from 'next/link';
-import PageTitle from '../components/PageTitle';
-import Panel from '../components/Panel';
 import TankList from '../components/TankList';
-import TankTable from '../components/TankTable';
-import { useUser } from '../lib/auth';
+import { useAuth } from '../hooks/useAuth';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { isWriter } = useUser();
+  const { permissions } = useAuth();
 
   return (
     <>
@@ -25,7 +22,7 @@ const Index = () => {
           placeholder="Search"
           onChange={(event) => setSearchQuery(event.target.value)}
         />
-        {isWriter && (
+        {permissions && (
           <Link href="/tanks/create">
             <a>
               <Button $primary className="flex items-center">

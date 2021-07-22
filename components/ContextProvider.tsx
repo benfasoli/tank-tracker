@@ -1,18 +1,18 @@
-import { AuthContext, useAuth } from '../lib/auth';
-
+import { AuthProvider } from '../hooks/useAuth';
 import { ReactNode } from 'react';
-import { TankProvider } from '../hooks/tanks';
+import { TankProvider } from '../hooks/useTanks';
+import { Toaster } from 'react-hot-toast';
 
 type Props = {
   children: ReactNode;
 };
 
 const ContextProvider = ({ children }: Props) => {
-  const auth = useAuth();
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthProvider>
       <TankProvider>{children}</TankProvider>
-    </AuthContext.Provider>
+      <Toaster position="bottom-center" />
+    </AuthProvider>
   );
 };
 

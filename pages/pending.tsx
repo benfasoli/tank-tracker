@@ -1,9 +1,9 @@
 import Layout from '../components/Layout';
 import { ReactNode } from 'react';
-import { useUser } from '../lib/auth';
+import { useAuth } from '../hooks/useAuth';
 
 const Pending = () => {
-  const { user } = useUser();
+  const { user } = useAuth();
   return (
     <p>
       Hey <b>{user.displayName}</b> - your registration is pending approval.

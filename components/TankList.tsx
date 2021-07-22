@@ -11,7 +11,7 @@ import StatusDot from './StatusDot';
 import StatusPill from './StatusPill';
 import TextIcon from './TextIcon';
 import { formatDate } from '../lib/date';
-import { useTanks } from '../hooks/tanks';
+import { useTanks } from '../hooks/useTanks';
 
 type Props = {
   searchQuery?: string;
@@ -98,21 +98,21 @@ const TankList = ({ searchQuery }: Props) => {
 
   return (
     <ListContainer>
-      <ListHeader className="flex">
-        <span className="w-4/12">Tank ID</span>
-        <span className="w-2/12 hidden sm:block">Last seen</span>
-        <span className="w-2/12 hidden sm:block">Pressure</span>
-        <span className="w-4/12 hidden sm:block">Content</span>
+      <ListHeader className="grid grid-cols-12 gap-4">
+        <span className="col-span-7 sm:col-span-4">Tank ID</span>
+        <span className="col-span-5 sm:col-span-2">Last seen</span>
+        <span className="col-span-2 hidden md:block">Pressure</span>
+        <span className="col-span-4 hidden sm:block">Contains</span>
       </ListHeader>
 
-      <ListBody className="divide-y divide-gray-100">
+      <ListBody className="divide-y divide-gray-100 whitespace-nowrap text-xs">
         {rowsOnPage.map((row) => {
           return (
             <ListItem key={row.tankId}>
               <Link href={'/tanks/' + row.tankId}>
-                <a className="p-2 block hover:bg-gray-50 border border-transparent box-border rounded-lg">
-                  <div className="flex flex-wrap items-center whitespace-nowrap text-xs">
-                    <ListData className="flex w-1/2 sm:w-4/12">
+                <a className="px-4 py-3 block hover:bg-gray-50 border border-transparent box-border rounded-lg">
+                  <div className="grid grid-cols-12 gap-4">
+                    <ListData className="flex col-span-7 sm:col-span-4">
                       <div className="mt-1.5 mr-4">
                         <StatusDot color={row.statusColor} />
                       </div>
@@ -123,19 +123,25 @@ const TankList = ({ searchQuery }: Props) => {
                         </div>
 
                         <p className="text-gray-400 mt-1 font-mono">
-                          <TextIcon className="mr-1">@</TextIcon>
+                          <TextIcon muted className="mr-1">
+                            @
+                          </TextIcon>
                           {row.fillId
                             ? row.fillId.toUpperCase().replace(/\s/g, '')
                             : ''}
                         </p>
 
                         <p className="text-gray-400 mt-1 font-mono">
-                          <TextIcon className="mr-1">#</TextIcon>
+                          <TextIcon muted className="mr-1">
+                            #
+                          </TextIcon>
                           {row.serial.toUpperCase().replace(/\s/g, '')}
                         </p>
 
                         <p className="text-gray-400 mt-1 truncate">
-                          <TextIcon className="mr-1">$</TextIcon>
+                          <TextIcon muted className="mr-1">
+                            $
+                          </TextIcon>
                           <span className="tracking-tight">
                             {row.owner || <TextIcon>-</TextIcon>}
                           </span>
@@ -143,7 +149,7 @@ const TankList = ({ searchQuery }: Props) => {
                       </div>
                     </ListData>
 
-                    <ListData className="w-1/2 sm:w-2/12">
+                    <ListData className="col-span-5 sm:col-span-2">
                       <p className="text-gray-600 font-medium">
                         {row.location || <TextIcon>-</TextIcon>}
                       </p>
@@ -154,26 +160,24 @@ const TankList = ({ searchQuery }: Props) => {
 
                       <StatusPill
                         color={row.pressureStatusColor}
-                        className="sm:hidden mt-1 font-light text-xs">
+                        className="block md:hidden mt-2 font-light text-xs">
                         {row.pressure} psi
                       </StatusPill>
                     </ListData>
 
-                    <ListData className="hidden md:block w-2/12">
+                    <ListData className="hidden md:block col-span-2">
                       <StatusPill
                         color={row.pressureStatusColor}
-                        className="mt-1 font-light text-xs">
+                        className="font-light text-xs">
                         {row.pressure} psi
                       </StatusPill>
                     </ListData>
 
-                    <ListData className="ml-7 sm:ml-0 mt-3 sm:mt-0 sm:w-4/12">
+                    <ListData className="ml-8 sm:ml-0 pl-2 sm:pl-0 col-span-12 sm:col-span-3 border-l sm:border-l-0 border-gray-200">
                       <div>
-                        {/* <span className="select-none text-gray-400 font-extralight text-xs inline-block w-10"> */}
                         <TextIcon className="inline-block w-8">
                           CO<sub>2</sub>
                         </TextIcon>
-                        {/* </span> */}
                         {row.co2 ? (
                           <span className="text-gray-600 font-medium">
                             {(Math.round(row.co2 * 100) / 100).toFixed(2)}{' '}

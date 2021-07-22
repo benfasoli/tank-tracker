@@ -1,8 +1,9 @@
-import { GithubAuthProvider, auth, firestore } from './firebase';
-import { UserData, UserPermissions, UserRole } from './types';
+import { GithubAuthProvider, auth, firestore } from '../lib/firebase';
+import { UserData, UserPermissions, UserRole } from '../lib/types';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRouter } from 'next/dist/client/router';
 
 export const login = () => {
   auth.signInWithPopup(GithubAuthProvider).catch(console.error);
@@ -12,7 +13,15 @@ export const logout = () => {
   return auth.signOut().then(console.log).catch(console.error);
 };
 
-export const useAuth = () => {
+export const AuthContext = createContext({
+  user: null,
+  role: null,
+  loading: true,
+  permissions: null,
+});
+
+export const AuthProvider = ({ children }) => {
+  const router = useRouter();
   const [user, loading] = useAuthState(auth);
   const [role, setRole] = useState<UserRole | null>(null);
 
@@ -67,19 +76,44 @@ export const useAuth = () => {
     permissions.isAdmin = true;
   }
 
-  return { user, role, loading, ...permissions };
+  if (loading) {
+    return <></>;
+  }
+
+  if (!user && router.pathname !== '/login') {
+    localStorage.setItem('loginSuccessRedirect', router.pathname);
+    router.push('/login');
+    return <></>;
+  }
+
+  if (user && router.pathname === '/login') {
+    const pathname = localStorage.getItem('loginSuccessRedirect') || '/';
+    router.push(pathname);
+    return <></>;
+  }
+
+  if (!role && router.pathname !== '/login') {
+    return <></>;
+  }
+
+  if (permissions.isPending && router.pathname !== '/pending') {
+    router.push('/pending');
+    return <></>;
+  }
+
+  if (!permissions.isPending && router.pathname === '/pending') {
+    const pathname = localStorage.getItem('loginSuccessRedirect') || '/';
+    router.push(pathname);
+    return <></>;
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, role, loading, permissions }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export const AuthContext = createContext({
-  user: null,
-  role: null,
-  loading: true,
-  isPending: null,
-  isReader: null,
-  isWriter: null,
-  isAdmin: null,
-});
-
-export const useUser = () => {
+export const useAuth = () => {
   return useContext(AuthContext);
 };

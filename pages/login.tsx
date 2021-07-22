@@ -1,5 +1,5 @@
 import Button from '../components/Button';
-import { login } from '../lib/auth';
+import { login } from '../hooks/useAuth';
 
 const Login = () => {
   return (

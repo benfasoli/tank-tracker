@@ -1,8 +1,8 @@
 import Layout from '../components/Layout';
-import { useUser } from '../lib/auth';
+import { useAuth } from '../hooks/useAuth';
 
 const Index = () => {
-  const { user } = useUser();
+  const { user } = useAuth();
   return (
     <>
       <h1 className="font-extrabold text-3xl mb-4">Dashboard</h1>

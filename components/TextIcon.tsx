@@ -1,8 +1,12 @@
 import tw from 'tailwind-styled-components';
 
-const TextIcon = tw.span`
+type Props = {
+  muted?: boolean;
+};
+
+const TextIcon = tw.span<Props>`
   select-none
-  text-gray-300
+  ${(p) => (p.muted ? 'text-gray-300' : 'text-gray-400')}
   font-extralight
   font-mono
 `;
