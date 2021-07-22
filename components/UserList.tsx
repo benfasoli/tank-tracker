@@ -6,6 +6,7 @@ import ListContainer from './ListContainer';
 import ListData from './ListData';
 import ListHeader from './ListHeader';
 import ListItem from './ListItem';
+import Loader from './Loader';
 import UserAvatar from './UserAvatar';
 import { firestore } from '../lib/firebase';
 import toast from 'react-hot-toast';
@@ -17,6 +18,10 @@ const UserList = () => {
 
   const query = firestore.collection('users').orderBy('displayName');
   const [users] = useCollectionData<UserData>(query);
+
+  if (!users || users.length == 0) {
+    return <Loader />;
+  }
 
   return (
     <ListContainer>

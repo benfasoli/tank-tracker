@@ -39,3 +39,4 @@ shiny
 *.pyc
 .mypy_cache
 env
+*.icloud

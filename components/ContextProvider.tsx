@@ -11,7 +11,10 @@ const ContextProvider = ({ children }: Props) => {
   return (
     <AuthProvider>
       <TankProvider>{children}</TankProvider>
-      <Toaster position="bottom-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{ className: 'text-sm text-gray-800' }}
+      />
     </AuthProvider>
   );
 };
