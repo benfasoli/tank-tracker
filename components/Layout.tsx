@@ -25,14 +25,20 @@ const Layout = ({ children }: Props) => (
         <Container>{children}</Container>
       </main>
       <footer>
-        <div className="my-6 text-gray-400 text-sm text-center">
-          Problem? Contact{' '}
-          <a
-            href="https://benfasoli.com"
-            className="text-primary-400 font-bold">
-            Ben Fasoli
-          </a>
-        </div>
+        <Container>
+          <div className="my-6 text-gray-400 text-xs text-center font-light flex justify-between">
+            <div>
+              Problem? Contact{' '}
+              <a
+                href="https://benfasoli.com"
+                className="text-primary-400 font-bold"
+                target="_blank">
+                Ben Fasoli
+              </a>
+            </div>
+            <div>© {new Date().getFullYear()} All rights reserved</div>
+          </div>
+        </Container>
       </footer>
     </div>
   </>

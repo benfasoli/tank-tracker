@@ -242,10 +242,11 @@ const TankList = ({ searchQuery }: Props) => {
       </ListBody>
 
       <div className="pt-4 border-t flex items-center space-x-4 justify-between p-4">
-        <p className="text-sm text-gray-700">
-          Showing <span className="font-medium">{rowIndexStart + 1}</span> to{' '}
-          <span className="font-medium">{rowIndexEnd}</span> of{' '}
-          <span className="font-medium">{rowCount}</span> results
+        <p className="text-sm text-gray-500">
+          Showing{' '}
+          <span className="font-medium text-gray-600">{rowIndexStart + 1}</span>{' '}
+          to <span className="font-medium text-gray-600">{rowIndexEnd}</span> of{' '}
+          <span className="font-medium text-gray-600">{rowCount}</span> results
         </p>
         <nav className="z-0 inline-flex rounded-md shadow-sm -space-x-px">
           <button

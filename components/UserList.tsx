@@ -34,7 +34,9 @@ const UserList = () => {
       <ListBody className="divide-y divide-gray-100">
         {users &&
           users.map((user) => (
-            <ListItem key={user.uid} className="grid grid-cols-12 gap-4 my-3">
+            <ListItem
+              key={user.uid}
+              className="grid grid-cols-12 gap-4 my-3 items-center">
               <ListData className="flex items-center col-span-12 sm:col-span-6 h-10">
                 <div className="relative h-10 w-10 rounded-full overflow-hidden">
                   <UserAvatar user={user} />
@@ -49,7 +51,7 @@ const UserList = () => {
               <ListData className="sm:col-span-4">
                 {permissions.isAdmin && user.uid !== currentUser.uid ? (
                   <select
-                    className="uppercase text-xs w-48 border-none focus:ring-transparent px-4 py-2 bg-gray-100 rounded-full"
+                    className="uppercase text-xs w-44 border-none focus:ring-transparent px-4 py-2 bg-gray-100 rounded-full"
                     value={user.role}
                     onChange={(event) => {
                       const role = event.target.value as UserRole;
@@ -65,7 +67,7 @@ const UserList = () => {
                     <option>read+write+admin</option>
                   </select>
                 ) : (
-                  <div className="uppercase text-xs w-48 border-none px-4 py-2 bg-gray-900 rounded-full text-gray-100">
+                  <div className="uppercase text-xs w-44 border-none px-4 py-2 bg-gray-900 rounded-full text-gray-100">
                     {user.role.split('+').reverse()[0]}
                   </div>
                 )}
@@ -100,6 +102,16 @@ const UserList = () => {
               </ListData>
             </ListItem>
           ))}
+        {permissions.isAdmin && (
+          <div className="w-full text-center py-4">
+            <a
+              className="text-primary-500"
+              href="https://console.firebase.google.com/u/0/project/tank-tracker-b67e2/firestore/data/~2Fusers"
+              target="_blank">
+              Edit as admin
+            </a>
+          </div>
+        )}
       </ListBody>
     </ListContainer>
   );
