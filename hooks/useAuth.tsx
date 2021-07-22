@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
     if (user) {
       const ref = firestore.collection('users').doc(user.uid);
 
-      // update saved user details
       ref.set(
         {
           uid: user.uid,
@@ -40,7 +39,6 @@ export const AuthProvider = ({ children }) => {
         { merge: true }
       );
 
-      // get user details with role
       const unsubscribe = ref.onSnapshot(
         (snapshot) => {
           setRole(snapshot.data()?.role);
@@ -51,6 +49,7 @@ export const AuthProvider = ({ children }) => {
           }
         }
       );
+
       return unsubscribe;
     } else {
       setRole(null);
@@ -83,28 +82,24 @@ export const AuthProvider = ({ children }) => {
   if (!user && router.pathname !== '/login') {
     localStorage.setItem('loginSuccessRedirect', router.pathname);
     router.push('/login');
-    return <></>;
   }
 
   if (user && router.pathname === '/login') {
     const pathname = localStorage.getItem('loginSuccessRedirect') || '/';
     router.push(pathname);
-    return <></>;
   }
 
-  if (!role && router.pathname !== '/login') {
-    return <></>;
-  }
+  // if (!role && router.pathname !== '/login') {
+  //   // return <></>;
+  // }
 
   if (permissions.isPending && router.pathname !== '/pending') {
     router.push('/pending');
-    return <></>;
   }
 
   if (!permissions.isPending && router.pathname === '/pending') {
     const pathname = localStorage.getItem('loginSuccessRedirect') || '/';
     router.push(pathname);
-    return <></>;
   }
 
   return (

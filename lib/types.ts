@@ -63,9 +63,3 @@ export type TankState = {
   d13c?: number;
   d18o?: number;
 };
-
-// export type TankStateRef = TankState & {
-//   docRef: firebase.firestore.DocumentReference;
-//   id: string;
-//   data: TankState;
-// };
