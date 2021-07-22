@@ -40,3 +40,6 @@ shiny
 .mypy_cache
 env
 *.icloud
+*.log
+.service-account.json
+firestore.json.gz
