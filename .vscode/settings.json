@@ -6,8 +6,6 @@
     "strings": true
   },
 
-  "python.pythonPath": "scripts/initdb/env/bin/python",
-
   "emmet.showExpandedAbbreviation": "never",
 
   "css.validate": false,

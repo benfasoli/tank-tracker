@@ -1,5 +1,7 @@
 import Button from './Button';
+import Image from 'next/image';
 import Link from 'next/link';
+import Logo from '../public/android-chrome-512x512.png';
 import { MenuIcon } from '@heroicons/react/solid';
 import NavLink from './NavLink';
 import { logout } from '../hooks/useAuth';
@@ -27,8 +29,15 @@ const Navbar = () => {
       <div className="flex align-center justify-between items-center">
         <Link href="/">
           <a>
-            <div className="font-bold text-lg font-extrabold">
-              <span className="text-primary-600 font-black">Tank</span> Tracker
+            <div className="font-bold text-lg font-extrabold flex align-center space-x-2">
+              {/* <img src="/android-chrome-512x512.png" /> */}
+              {/* <div>
+                <Image src={Logo} alt="Tank Tracker" height={18} width={18} />
+              </div> */}
+              <div>
+                <span className="text-primary-600 font-black">Tank</span>{' '}
+                Tracker
+              </div>
             </div>
           </a>
         </Link>

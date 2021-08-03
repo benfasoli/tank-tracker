@@ -15,22 +15,22 @@ service cloud.firestore {
     }
   
     match /{document=**} {
-    	allow create: if userRoleIn(["read+write", "read+write+admin"]);
-      allow write: if userRoleIn(["read+write+admin"]);
-      allow read: if userRoleIn(["read", "read+write", "read+write+admin"]);
+    	allow create: if userRoleIn(["write", "admin"]);
+      allow write: if userRoleIn(["admin"]);
+      allow read: if userRoleIn(["read", "write", "admin"]);
     }
     
     match /users/{uid} {
-    	allow write: if userRoleIn(["read+write+admin"]);
+    	allow write: if userRoleIn(["admin"]);
       allow update: if isSignedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['displayName', 'email', 'photoURL']);
       allow create: if isSignedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['displayName', 'email', 'photoURL']);
     }
     
     match /tanks/{tankId} {
-    	allow create, update: if userRoleIn(["read+write", "read+write+admin"]);
+    	allow create, update: if userRoleIn(["write", "admin"]);
       
       match /history/{tankRecordId} {
-      	allow update: if userRoleIn(["read+write+admin"]);
+      	allow update: if userRoleIn(["admin"]);
       }
     }
   }

@@ -63,12 +63,12 @@ const UserList = () => {
                     }}>
                     <option>pending</option>
                     <option>read</option>
-                    <option>read+write</option>
-                    <option>read+write+admin</option>
+                    <option>write</option>
+                    <option>admin</option>
                   </select>
                 ) : (
                   <div className="uppercase text-xs w-44 border-none px-4 py-2 bg-gray-900 rounded-full text-gray-100">
-                    {user.role.split('+').reverse()[0]}
+                    {user.role}
                   </div>
                 )}
               </ListData>

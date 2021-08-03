@@ -1,4 +1,6 @@
-import { UserRole } from './types';
+import { TankRecord, UserRole } from './types';
+
+import firebase from 'firebase/app';
 import { firestore } from './firebase';
 
 export const getUsers = () => {
@@ -14,7 +16,7 @@ export const getUsers = () => {
 };
 
 /**
- * Modify a user's permissions. The calling user must have the read+write+admin
+ * Modify a user's permissions. The calling user must have the admin
  * role or Firestore's security rules will return an error.
  */
 export const setUserRole = (uid: string, role: UserRole) => {
@@ -37,15 +39,16 @@ export const createTank = ({ id, data }) => {
     .set({ time, ...data }, { merge: true });
 };
 
-// export const getTanks = () => {
+// export const getTankHistroy = (tankId: string) => {
 //   return firestore
 //     .collection('tanks')
+//     .doc(tankId)
+//     .collection('history')
+//     .orderBy('updatedAt', 'desc')
 //     .get()
 //     .then((querySnapshot) => {
 //       return querySnapshot.docs.map((doc) => {
-//         const id = doc.id;
-//         const data = doc.data();
-//         return { id, data };
+//         return doc.data() as TankRecord;
 //       });
 //     });
 // };

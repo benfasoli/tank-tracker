@@ -1,8 +1,8 @@
 name: Backup Firestore
 
 on:
-  workflow_dispatch:
-  push:
+  # workflow_dispatch:
+  # push:
   schedule:
     - cron: 0 0 * * *
 

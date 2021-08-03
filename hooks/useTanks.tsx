@@ -1,18 +1,17 @@
+import { atom, useRecoilState } from 'recoil';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { TankState } from '../lib/types';
+import { TankRecord } from '../lib/types';
 import { firestore } from '../lib/firebase';
 
-export const TankContext = createContext<TankState[]>([]);
+export const TankContext = createContext<TankRecord[]>([]);
 
 export const TankProvider = ({ children }) => {
-  const [tanks, setTanks] = useState<TankState[]>([]);
+  const [tanks, setTanks] = useState<TankRecord[]>([]);
 
   useEffect(() => {
-    const query = firestore.collection('tanks'); //.limit(30);
+    const query = firestore.collection('tanks');
     query.onSnapshot((snapshot) => {
-      console.log({ snapshot, changes: snapshot.docChanges() });
-
       const tanks = snapshot.docs.map((doc) => {
         const data = doc.data();
 
@@ -20,7 +19,7 @@ export const TankProvider = ({ children }) => {
           ...data,
           updatedAt: data.updatedAt.toDate(),
           tankId: doc.id,
-        } as TankState;
+        } as TankRecord;
       });
 
       setTanks(tanks);

@@ -1,51 +1,31 @@
-import Layout from '../../components/Layout';
-import Link from 'next/link';
-import { ReactNode } from 'react';
-import { useRouter } from 'next/dist/client/router';
+import { ReactNode, useState } from 'react';
 
-// TODO: edit as admin button with redirect to db console
-const Tank = () => {
+import Layout from '../../../components/Layout';
+import Link from 'next/link';
+import TankPageNav from '../../../components/TankPageNav';
+import { useRouter } from 'next/dist/client/router';
+import { useTankHistory } from '../../../hooks/useTankHistory';
+
+const TankHistory = () => {
   const router = useRouter();
   const { tankId } = router.query;
 
-  return (
-    <nav className="flex">
-      <ol className="flex items-center space-x-2 text-sm">
-        <li>
-          <div>
-            <Link href="/">
-              <a className="text-gray-400 hover:text-gray-500">Tanks</a>
-            </Link>
-          </div>
-        </li>
-        <li>
-          <div className="flex items-center">
-            <svg
-              className="flex-shrink-0 h-5 w-5 text-gray-300"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true">
-              <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-            </svg>
-            <Link href={router.asPath}>
-              <a
-                href="#"
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                aria-current="page">
-                {tankId}
-              </a>
-            </Link>
-          </div>
-        </li>
-      </ol>
-    </nav>
-  );
+  const [showHistory, setShowHistory] = useState(false);
+
+  // const tankHistory = useTankHistory(tankId as string);
+  // console.log({ tankHistory });
+
+  return 'the history of the tank';
 };
 
-Tank.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
+TankHistory.getLayout = (page: ReactNode) => (
+  <Layout>
+    <TankPageNav />
+    {page}
+  </Layout>
+);
 
-export default Tank;
+export default TankHistory;
 
 // <nav className="flex" aria-label="Breadcrumb">
 // <ol className="flex items-center space-x-4">

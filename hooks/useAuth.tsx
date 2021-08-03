@@ -66,10 +66,10 @@ export const AuthProvider = ({ children }) => {
     permissions.isPending = true;
   } else if (role === 'read') {
     permissions.isReader = true;
-  } else if (role === 'read+write') {
+  } else if (role === 'write') {
     permissions.isReader = true;
     permissions.isWriter = true;
-  } else if (role === 'read+write+admin') {
+  } else if (role === 'admin') {
     permissions.isReader = true;
     permissions.isWriter = true;
     permissions.isAdmin = true;

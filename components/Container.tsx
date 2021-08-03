@@ -1,8 +1,6 @@
 import tw from 'tailwind-styled-components';
 
-type Props = {};
-
-const Container = tw.div<Props>`
+const Container = tw.div`
   container
   max-w-6xl
   mx-auto
