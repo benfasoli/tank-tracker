@@ -140,8 +140,8 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: Props) => {
   return (
     <ListContainer>
       <ListHeader className="grid grid-cols-12 gap-4">
-        <span className="col-span-4">Tank ID</span>
-        <span className="col-span-4 sm:col-span-4">Last seen</span>
+        <span className="col-span-8 sm:col-span-4">Tank ID</span>
+        <span className="col-span-4">Last seen</span>
         <span className="col-span-4 hidden sm:block">Contains</span>
       </ListHeader>
 
@@ -150,9 +150,9 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: Props) => {
           return (
             <ListItem key={row.tankId}>
               <Link href={'/tanks/' + row.tankId}>
-                <a className="px-4 py-3 block hover:bg-gray-50 border border-transparent box-border rounded-lg">
+                <a className="px-3 py-3 block hover:bg-gray-50 border border-transparent box-border rounded-lg">
                   <div className="grid grid-cols-12 gap-4">
-                    <ListData className="flex col-span-4">
+                    <ListData className="flex col-span-8 sm:col-span-4">
                       <div className="mt-1.5 mr-4">
                         <StatusDot color={row.statusColor} />
                       </div>
@@ -198,10 +198,10 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: Props) => {
                       </StatusPill>
                     </ListData>
 
-                    <ListData className="ml-8 sm:ml-0 pl-4 col-span-12 sm:col-span-4 border-l">
+                    <ListData className="ml-8 sm:ml-0 pl-2 sm:pl-4 col-span-12 sm:col-span-4 border-l">
                       {observations.map((obs) => (
                         <div key={obs.key}>
-                          <TextIcon className="inline-block w-8">
+                          <TextIcon className="inline-block w-10">
                             {obs.name}
                           </TextIcon>
 
