@@ -40,6 +40,9 @@ export default NextAuth({
       });
       session.login = login;
       session.role = role;
+
+      console.log('Authenticated user:', { session, token });
+
       return session;
     },
     async jwt({ token, account, profile }) {

@@ -13,8 +13,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  // const { role } = session;
-
   switch (method) {
     case 'GET':
       const rows = await db.get();
