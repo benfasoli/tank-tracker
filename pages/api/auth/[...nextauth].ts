@@ -9,7 +9,6 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
       authorization:
         'https://github.com/login/oauth/authorize?scope=read:user+read:org',
-      // 'https://github.com/login/oauth/authorize?scope=read:user+repo+read:org',
     }),
   ],
 
@@ -23,12 +22,14 @@ export default NextAuth({
 
   callbacks: {
     async signIn({ account, profile }) {
+      console.log('Attempting signin:', { account, profile });
       const login = profile.login as string;
       const accessToken = account.access_token as string;
       const role = await getRole({
         login,
         accessToken,
       });
+      console.log('Authenticated user with role:', { role });
       return !!role;
     },
     async session({ session, token }) {
