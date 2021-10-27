@@ -1,10 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import db from '../../lib/db';
+import { getSession } from 'next-auth/react';
 import { parseTankRecord } from '../../lib/tanks';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
+  const session = await getSession({ req });
+
+  if (!session) {
+    res.status(403).end('Not authorized.');
+    return;
+  }
+
+  // const { role } = session;
 
   switch (method) {
     case 'GET':
@@ -18,6 +27,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      res.status(405).end(`Method ${method} not allowed.`);
   }
 };

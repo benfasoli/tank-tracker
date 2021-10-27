@@ -166,7 +166,6 @@ const EditForm = ({ defaultTank }: Props) => {
       updatedAt: new Date(),
       userId: String(session.login),
     };
-    console.log({ session });
 
     toast.promise(
       api.post(tankRecord).then(() => mutate('/api/tanks')),

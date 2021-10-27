@@ -8,8 +8,8 @@ export default NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
       authorization:
-        // 'https://github.com/login/oauth/authorize?scope=read:user+read:org',
-        'https://github.com/login/oauth/authorize?scope=read:user+repo+read:org',
+        'https://github.com/login/oauth/authorize?scope=read:user+read:org',
+      // 'https://github.com/login/oauth/authorize?scope=read:user+repo+read:org',
     }),
   ],
 

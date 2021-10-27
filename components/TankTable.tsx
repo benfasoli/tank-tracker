@@ -58,8 +58,6 @@ const TankRecordTable = ({ tankRecords }: Props) => {
     }
   };
 
-  console.log({ tankRecords, selectedRowIndex });
-
   return (
     <div className="max-w-full overflow-x-scroll rounded-lg border shadow-sm">
       <table>

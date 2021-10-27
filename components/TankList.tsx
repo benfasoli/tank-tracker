@@ -120,8 +120,6 @@ const TankList = ({ searchQuery, sortBy }: Props) => {
     [sortBy, tanks]
   );
 
-  console.log({ rows });
-
   if (!tanks) {
     return <Loader />;
   }
