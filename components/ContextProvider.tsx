@@ -28,24 +28,21 @@ const AuthRedirect = ({ children }) => {
 
 const ContextProvider = ({ children, session }: Props) => {
   return (
-    <SessionProvider
-      session={session}
-      refetchInterval={600}
-      // baseurl=""
-      // basePath=""
-    >
-      <AuthRedirect>{children}</AuthRedirect>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          className: 'text-sm',
-          style: {
-            borderRadius: '999px',
-            background: '#333',
-            color: '#fff',
-          },
-        }}
-      />
+    <SessionProvider session={session} refetchInterval={600}>
+      <AuthRedirect>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            className: 'text-sm',
+            style: {
+              borderRadius: '999px',
+              background: '#333',
+              color: '#fff',
+            },
+          }}
+        />
+        {children}
+      </AuthRedirect>
     </SessionProvider>
   );
 };

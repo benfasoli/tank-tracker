@@ -39,7 +39,7 @@ const Navbar = () => {
                   <li>
                     <a
                       href={
-                        'https://github.com/uataq/tank-tracker/settings/access'
+                        'https://github.com/orgs/uataq/teams/tank-tracker/members'
                       }
                       target="_blank">
                       Users

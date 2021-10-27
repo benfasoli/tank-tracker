@@ -1,3 +1,4 @@
+import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/solid';
 import { ReactNode, useState } from 'react';
 
 import Button from '../components/Button';
@@ -7,11 +8,12 @@ import TankList from '../components/TankList';
 
 export default function IndexPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('Tank ID');
+  const [sortBy, setSortBy] = useState('tankId');
+  const [sortAscending, setSortAscending] = useState(true);
 
   return (
     <div>
-      <div className="block md:flex md:space-x-4 items-center justify-between space-y-2 mb-4">
+      <div className="block sm:flex md:space-x-4 items-center justify-between space-y-2 mb-2">
         <div className="flex items-center space-x-4">
           <input
             type="text"
@@ -23,15 +25,40 @@ export default function IndexPage() {
           />
         </div>
 
-        <div className="flex items-center space-x-4">
-          <select
-            className="max-w-xs focus:ring-primary-500 focus:border-indigo-500 text-sm border-gray-300 rounded-md"
-            value={sortBy}
-            onChange={(event) => setSortBy(event.target.value)}>
-            <option value="tankId">Tank ID</option>
-            <option value="updatedAt">Updated at</option>
-            <option value="pressure">Pressure</option>
-          </select>
+        <div className="flex items-center space-x-2 justify-end">
+          <div className="flex space-x-1">
+            <button
+              className="block items-center px-2 py-2 rounded-md text-gray-400 hover:bg-gray-50 hover:text-primary-400"
+              onClick={() => setSortAscending((prev) => !prev)}>
+              {sortAscending ? (
+                <>
+                  <span className="sr-only">Ascending</span>
+                  <ArrowSmUpIcon className="h-4 w-4 " aria-hidden="true" />
+                </>
+              ) : (
+                <>
+                  <span className="sr-only">Descending</span>
+                  <ArrowSmDownIcon className="h-4 w-4 " aria-hidden="true" />
+                </>
+              )}
+            </button>
+
+            <select
+              className="focus:ring-primary-500 focus:border-indigo-500 text-sm border-gray-300 rounded-md"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}>
+              <option value="tankId">Tank ID</option>
+              <option value="updatedAt">Updated at</option>
+              <option value="pressure">Pressure</option>
+              <option value="location">Location</option>
+              <option value="co2">CO2</option>
+              <option value="ch4">CH4</option>
+              <option value="co">CO</option>
+              <option value="d13c">d13C</option>
+              <option value="d18o">d18O</option>
+            </select>
+          </div>
+
           <Link href="/tanks/create">
             <a>
               <Button $primary className="flex items-center">
@@ -52,8 +79,12 @@ export default function IndexPage() {
           </Link>
         </div>
       </div>
-      {/* <TankTable tankRecords={tanks} /> */}
-      <TankList searchQuery={searchQuery} sortBy={sortBy} />
+
+      <TankList
+        searchQuery={searchQuery}
+        sortBy={sortBy}
+        sortAscending={sortAscending}
+      />
     </div>
   );
 }

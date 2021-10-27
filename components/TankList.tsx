@@ -17,12 +17,7 @@ import { useCurrentTanks } from '../hooks/tanks';
 type Props = {
   searchQuery?: string;
   sortBy: string;
-};
-
-const sortDirectionAscending = {
-  tankId: true,
-  updatedAt: false,
-  pressure: true,
+  sortAscending: boolean;
 };
 
 const observations = [
@@ -69,7 +64,7 @@ const observations = [
   },
 ];
 
-const TankList = ({ searchQuery, sortBy }: Props) => {
+const TankList = ({ searchQuery, sortBy, sortAscending }: Props) => {
   const { tanks } = useCurrentTanks();
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -84,13 +79,14 @@ const TankList = ({ searchQuery, sortBy }: Props) => {
       tanks &&
       tanks
         .sort((first, second) => {
-          const useAscending = sortDirectionAscending[sortBy];
           if (first[sortBy] > second[sortBy]) {
-            return useAscending ? 1 : -1;
+            return sortAscending ? 1 : -1;
           } else if (first[sortBy] < second[sortBy]) {
-            return useAscending ? -1 : 1;
-          } else {
+            return sortAscending ? -1 : 1;
+          } else if (second[sortBy]) {
             return 0;
+          } else {
+            return -1;
           }
         })
         .map((tank) => {
@@ -117,7 +113,7 @@ const TankList = ({ searchQuery, sortBy }: Props) => {
             pressureStatusColor,
           };
         }),
-    [sortBy, tanks]
+    [sortBy, sortAscending, tanks]
   );
 
   if (!tanks) {

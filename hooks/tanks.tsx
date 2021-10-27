@@ -7,9 +7,7 @@ export function useTanks() {
   const { data, error } = useSWR('/api/tanks', api.get);
 
   if (error) {
-    toast(error, {
-      icon: '🤯',
-    });
+    console.error(error);
   }
 
   return {

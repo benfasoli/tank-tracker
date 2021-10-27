@@ -87,7 +87,7 @@ const coFields = [
 const d13cFields = [
   {
     key: 'd13c',
-    name: 'Mole fraction',
+    name: 'Isotope ratio',
     unit: '‰',
   },
   { key: 'd13cStdev', name: 'Standard deviation', unit: '‰' },
@@ -103,7 +103,7 @@ const d13cFields = [
 const d18oFields = [
   {
     key: 'd18o',
-    name: 'Mole fraction',
+    name: 'Isotope ratio',
     unit: '‰',
   },
   { key: 'd18oStdev', name: 'Standard deviation', unit: '‰' },
