@@ -1,13 +1,24 @@
 import Button from '../components/Button';
-import { login } from '../hooks/useAuth';
+import { signIn } from 'next-auth/react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/dist/client/router';
 
-const Login = () => {
+export default function LoginPage() {
+  const router = useRouter();
+  const { error } = router.query;
+
+  if (error) {
+    toast(String(error), {
+      icon: '🤯',
+    });
+  }
+
   return (
     <div className="flex place-items-center justify-center min-h-screen w-full">
       <div>
         <h1 className="font-extrabold text-3xl my-6">Tank Tracker</h1>
 
-        <Button $large onClick={login}>
+        <Button $large onClick={() => signIn('github', { callbackUrl: '/' })}>
           <svg width="24" height="24" fill="currentColor">
             <path
               fillRule="evenodd"
@@ -28,6 +39,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

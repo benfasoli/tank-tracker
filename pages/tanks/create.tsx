@@ -1,10 +1,11 @@
+import CreateForm from '../../components/CreateForm';
 import Layout from '../../components/Layout';
 import { ReactNode } from 'react';
 
-const CreateTank = () => {
-  return <div>create a new tank page</div>;
+const CreateTankPage = () => {
+  return <CreateForm />;
 };
 
-CreateTank.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
+CreateTankPage.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
 
-export default CreateTank;
+export default CreateTankPage;

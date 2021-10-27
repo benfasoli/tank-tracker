@@ -1,39 +1,19 @@
+import { signOut, useSession } from 'next-auth/react';
+
 import Button from './Button';
-import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '../public/android-chrome-512x512.png';
-import { MenuIcon } from '@heroicons/react/solid';
-import NavLink from './NavLink';
-import { logout } from '../hooks/useAuth';
 import { useState } from 'react';
-
-const navLinkData = [
-  { title: 'Tanks', href: '/' },
-  { title: 'Settings', href: '/settings' },
-];
-
-const NavLinks = () => (
-  <ul>
-    {navLinkData.map((link) => (
-      <li key={link.title}>
-        <NavLink href={link.href}>{link.title}</NavLink>
-      </li>
-    ))}
-  </ul>
-);
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { data: session } = useSession();
+
   return (
     <nav className="max-w-6xl mx-auto p-4 sm:px-6">
       <div className="flex align-center justify-between items-center">
         <Link href="/">
           <a>
-            <div className="font-bold text-lg font-extrabold flex align-center space-x-2">
-              {/* <img src="/android-chrome-512x512.png" /> */}
-              {/* <div>
-                <Image src={Logo} alt="Tank Tracker" height={18} width={18} />
-              </div> */}
+            <div className="text-lg font-extrabold flex align-center space-x-2">
               <div>
                 <span className="text-primary-600 font-black">Tank</span>{' '}
                 Tracker
@@ -46,18 +26,37 @@ const Navbar = () => {
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="">
-            <MenuIcon className="h-5 w-5" />
+            <img
+              src={session.user.image}
+              style={{ borderRadius: '50%', height: 35 }}
+            />
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute right-0 border top-5 mt-2 rounded-xl bg-white text-black p-4 z-10 shadow-lg">
-              <div
-                className="py-2 border-b"
-                onClick={() => setIsDropdownOpen(false)}>
-                <NavLinks />
+            <div className="absolute right-0 border top-5 mt-2 rounded-xl bg-white text-black p-4 z-10 shadow-lg space-y-2">
+              <div onClick={() => setIsDropdownOpen(false)}>
+                <ul className="space-y-1">
+                  <li>
+                    <a
+                      href={
+                        'https://github.com/uataq/tank-tracker/settings/access'
+                      }
+                      target="_blank">
+                      Users
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://docs.google.com/spreadsheets/d/1p4LuLfq75ORQnqirGqmOHZDS0M0xodSpy1s-DfMkt04"
+                      target="_blank">
+                      Database
+                    </a>
+                  </li>
+                </ul>
               </div>
+              <hr />
               <div className="pt-3">
-                <Button $primary onClick={logout}>
+                <Button $primary onClick={() => signOut()}>
                   Log out
                 </Button>
               </div>

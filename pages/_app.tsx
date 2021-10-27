@@ -2,11 +2,14 @@ import 'tailwindcss/tailwind.css';
 
 import ContextProvider from '../components/ContextProvider';
 
-function App({ Component, pageProps }) {
+const App = ({ Component, pageProps: { session, ...pageProps } }) => {
   const getLayout = Component.getLayout || ((page) => page);
+
   return (
-    <ContextProvider>{getLayout(<Component {...pageProps} />)}</ContextProvider>
+    <ContextProvider session={session}>
+      {getLayout(<Component {...pageProps} />)}
+    </ContextProvider>
   );
-}
+};
 
 export default App;

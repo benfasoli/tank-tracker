@@ -12,51 +12,117 @@ import StatusDot from './StatusDot';
 import StatusPill from './StatusPill';
 import TextIcon from './TextIcon';
 import { formatDate } from '../lib/date';
-import { useTanks } from '../hooks/useTanks';
+import { useCurrentTanks } from '../hooks/tanks';
 
 type Props = {
   searchQuery?: string;
+  sortBy: string;
 };
 
-const TankList = ({ searchQuery }: Props) => {
-  const tanks = useTanks();
+const sortDirectionAscending = {
+  tankId: true,
+  updatedAt: false,
+  pressure: true,
+};
+
+const observations = [
+  {
+    key: 'co2',
+    name: (
+      <>
+        CO<sub>2</sub>
+      </>
+    ),
+    unit: 'ppm',
+  },
+  {
+    key: 'ch4',
+    name: (
+      <>
+        CH<sub>4</sub>
+      </>
+    ),
+    unit: 'ppb',
+  },
+  {
+    key: 'co',
+    name: <>CO</>,
+    unit: 'ppb',
+  },
+  {
+    key: 'd13c',
+    name: (
+      <>
+        δ<sup>13</sup>C
+      </>
+    ),
+    unit: '‰',
+  },
+  {
+    key: 'd18o',
+    name: (
+      <>
+        δ<sup>18</sup>O
+      </>
+    ),
+    unit: '‰',
+  },
+];
+
+const TankList = ({ searchQuery, sortBy }: Props) => {
+  const { tanks } = useCurrentTanks();
   const [pageIndex, setPageIndex] = useState(0);
 
   const searchQueryLower = searchQuery.toLowerCase();
+
   useEffect(() => {
     setPageIndex(0);
   }, [searchQuery]);
 
   const rows = useMemo(
     () =>
-      tanks.map((tank) => {
-        const updatedAt = formatDate(tank.updatedAt);
-        const isEmpty = tank.pressure < 500;
-        const isFull = tank.pressure > 1800;
+      tanks &&
+      tanks
+        .sort((first, second) => {
+          const useAscending = sortDirectionAscending[sortBy];
+          if (first[sortBy] > second[sortBy]) {
+            return useAscending ? 1 : -1;
+          } else if (first[sortBy] < second[sortBy]) {
+            return useAscending ? -1 : 1;
+          } else {
+            return 0;
+          }
+        })
+        .map((tank) => {
+          const updatedAt = formatDate(tank.updatedAt);
+          const isEmpty = tank.pressure < 500;
+          const isFull = tank.pressure > 1800;
 
-        if (isFull) {
-          var pressureStatusColor = 'green';
-        } else if (isEmpty) {
-          var pressureStatusColor = 'red';
-        } else {
-          var pressureStatusColor = 'orange';
-        }
+          if (isFull) {
+            var pressureStatusColor = 'green';
+          } else if (isEmpty) {
+            var pressureStatusColor = 'red';
+          } else {
+            var pressureStatusColor = 'orange';
+          }
 
-        const statusColor = tank.location ? pressureStatusColor : 'red';
+          const statusColor = tank.location ? pressureStatusColor : 'red';
 
-        return {
-          ...tank,
-          updatedAt,
-          isEmpty,
-          isFull,
-          statusColor,
-          pressureStatusColor,
-        };
-      }),
-    [tanks]
+          return {
+            ...tank,
+            updatedAt,
+            isEmpty,
+            isFull,
+            statusColor,
+            pressureStatusColor,
+          };
+        }),
+    [sortBy, tanks]
   );
 
-  if (tanks.length == 0) {
+  console.log({ rows });
+
+  if (!tanks) {
     return <Loader />;
   }
 
@@ -80,9 +146,8 @@ const TankList = ({ searchQuery }: Props) => {
   return (
     <ListContainer>
       <ListHeader className="grid grid-cols-12 gap-4">
-        <span className="col-span-7 sm:col-span-4">Tank ID</span>
-        <span className="col-span-5 sm:col-span-2">Last seen</span>
-        <span className="col-span-2 hidden md:block">Pressure</span>
+        <span className="col-span-4">Tank ID</span>
+        <span className="col-span-4 sm:col-span-4">Last seen</span>
         <span className="col-span-4 hidden sm:block">Contains</span>
       </ListHeader>
 
@@ -93,7 +158,7 @@ const TankList = ({ searchQuery }: Props) => {
               <Link href={'/tanks/' + row.tankId}>
                 <a className="px-4 py-3 block hover:bg-gray-50 border border-transparent box-border rounded-lg">
                   <div className="grid grid-cols-12 gap-4">
-                    <ListData className="flex col-span-7 sm:col-span-4">
+                    <ListData className="flex col-span-4">
                       <div className="mt-1.5 mr-4">
                         <StatusDot color={row.statusColor} />
                       </div>
@@ -112,25 +177,18 @@ const TankList = ({ searchQuery }: Props) => {
                             : ''}
                         </p>
 
-                        <p className="text-gray-400 mt-1 font-mono">
-                          <TextIcon muted className="mr-1">
-                            #
-                          </TextIcon>
-                          {row.serial.toUpperCase().replace(/\s/g, '')}
-                        </p>
-
                         <p className="text-gray-400 mt-1 truncate">
                           <TextIcon muted className="mr-1">
                             $
                           </TextIcon>
                           <span className="tracking-tight">
-                            {row.owner || <TextIcon>-</TextIcon>}
+                            {row.owner || <TextIcon muted>-</TextIcon>}
                           </span>
                         </p>
                       </div>
                     </ListData>
 
-                    <ListData className="col-span-5 sm:col-span-2">
+                    <ListData className="col-span-4 sm:col-span-4">
                       <p className="text-gray-600 font-medium">
                         {row.location || <TextIcon>-</TextIcon>}
                       </p>
@@ -141,97 +199,32 @@ const TankList = ({ searchQuery }: Props) => {
 
                       <StatusPill
                         color={row.pressureStatusColor}
-                        className="block md:hidden mt-2 font-light text-xs">
+                        className="mt-2 font-light text-xs">
                         {row.pressure} psi
                       </StatusPill>
                     </ListData>
 
-                    <ListData className="hidden md:block col-span-2">
-                      <StatusPill
-                        color={row.pressureStatusColor}
-                        className="font-light text-xs">
-                        {row.pressure} psi
-                      </StatusPill>
-                    </ListData>
+                    <ListData className="ml-8 sm:ml-0 pl-4 col-span-12 sm:col-span-4 border-l">
+                      {observations.map((obs) => (
+                        <div key={obs.key}>
+                          <TextIcon className="inline-block w-8">
+                            {obs.name}
+                          </TextIcon>
 
-                    <ListData className="ml-8 sm:ml-0 pl-2 sm:pl-0 col-span-12 sm:col-span-3 border-l sm:border-l-0 border-gray-200">
-                      <div>
-                        <TextIcon className="inline-block w-8">
-                          CO<sub>2</sub>
-                        </TextIcon>
-                        {row.co2 ? (
-                          <span className="text-gray-600 font-medium">
-                            {(Math.round(row.co2 * 100) / 100).toFixed(2)}{' '}
-                            <span className="text-gray-400 text-xs font-light">
-                              ppm
+                          {row[obs.key] ? (
+                            <span className="text-gray-600 font-medium">
+                              {(Math.round(row[obs.key] * 100) / 100).toFixed(
+                                2
+                              )}{' '}
+                              <span className="text-gray-400 text-xs font-light">
+                                {obs.unit}
+                              </span>
                             </span>
-                          </span>
-                        ) : (
-                          <span className="text-gray-200">-</span>
-                        )}
-                      </div>
-
-                      <div>
-                        <TextIcon className="inline-block w-8">
-                          CH<sub>4</sub>
-                        </TextIcon>
-                        {row.ch4 ? (
-                          <span className="text-gray-600 font-medium">
-                            {(Math.round(row.ch4 * 100) / 100).toFixed(2)}{' '}
-                            <span className="text-gray-400 text-xs font-light">
-                              ppb
-                            </span>
-                          </span>
-                        ) : (
-                          <span className="text-gray-200">-</span>
-                        )}
-                      </div>
-
-                      <div>
-                        <TextIcon className="inline-block w-8">CO</TextIcon>
-                        {row.co ? (
-                          <span className="text-gray-600 font-medium">
-                            {(Math.round(row.co * 100) / 100).toFixed(2)}{' '}
-                            <span className="text-gray-400 text-xs font-light">
-                              ppb
-                            </span>
-                          </span>
-                        ) : (
-                          <span className="text-gray-200">-</span>
-                        )}
-                      </div>
-
-                      <div>
-                        <TextIcon className="inline-block w-8">
-                          δ<sup>13</sup>C
-                        </TextIcon>
-                        {row.d13c ? (
-                          <span className="text-gray-600 font-medium">
-                            {(Math.round(row.d13c * 100) / 100).toFixed(2)}{' '}
-                            <span className="text-gray-400 text-xs font-light">
-                              ‰
-                            </span>
-                          </span>
-                        ) : (
-                          <span className="text-gray-200">-</span>
-                        )}
-                      </div>
-
-                      <div>
-                        <TextIcon className="inline-block w-8">
-                          δ<sup>18</sup>O
-                        </TextIcon>
-                        {row.d18o ? (
-                          <span className="text-gray-600 font-medium">
-                            {(Math.round(row.d18o * 100) / 100).toFixed(2)}{' '}
-                            <span className="text-gray-400 text-xs font-light">
-                              ‰
-                            </span>
-                          </span>
-                        ) : (
-                          <span className="text-gray-200">-</span>
-                        )}
-                      </div>
+                          ) : (
+                            <span className="text-gray-200">-</span>
+                          )}
+                        </div>
+                      ))}
                     </ListData>
                   </div>
                 </a>

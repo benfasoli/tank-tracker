@@ -4,7 +4,8 @@ const Container = tw.div`
   container
   max-w-6xl
   mx-auto
-  p-4 
+  px-4
+  py-2
   sm:px-6
 `;
 

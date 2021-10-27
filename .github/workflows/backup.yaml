@@ -1,24 +1,24 @@
-name: Backup Firestore
+# name: Backup Firestore
 
-on:
-  # workflow_dispatch:
-  # push:
-  schedule:
-    - cron: 0 0 * * *
+# on:
+#   # workflow_dispatch:
+#   # push:
+#   schedule:
+#     - cron: 0 0 * * *
 
-jobs:
-  export_data:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 'lts/*'
-      - uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+# jobs:
+#   export_data:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: 'lts/*'
+#       - uses: google-github-actions/setup-gcloud@master
+#         with:
+#           project_id: ${{ secrets.GCP_PROJECT_ID }}
+#           service_account_key: ${{ secrets.GCP_SA_KEY }}
+#           export_default_credentials: true
 
-      - run: npx --package node-firestore-import-export firestore-export --backupFile firestore.json
-      - run: gzip firestore.json
-      - run: gsutil cp firestore.json.gz gs://${{ secrets.GCP_PROJECT_ID }}.appspot.com/firestore/$(date +%s).json.gzip
+#       - run: npx --package node-firestore-import-export firestore-export --backupFile firestore.json
+#       - run: gzip firestore.json
+#       - run: gsutil cp firestore.json.gz gs://${{ secrets.GCP_PROJECT_ID }}.appspot.com/firestore/$(date +%s).json.gzip

@@ -5,17 +5,19 @@ import { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
+  title?: string;
 };
 
-const Layout = ({ children }: Props) => (
+const Layout = ({ children, title }: Props) => (
   <>
     <Head>
-      <title>Tank Tracker</title>
+      <title>{title || 'Tank Tracker'}</title>
       <meta
         name="description"
         content="Tank asset database for UATAQ lab operations."
       />
       <link rel="icon" href="/favicon.ico" />
+      <link rel="stylesheet" href="https://rsms.me/inter/inter.css"></link>
     </Head>
     <div className="min-h-screen w-full subpixel-antialiased">
       <header>
@@ -28,7 +30,7 @@ const Layout = ({ children }: Props) => (
         <Container>
           <div className="my-6 text-gray-400 text-xs text-center font-light flex justify-between">
             <div>
-              Problem? Contact{' '}
+              Problem? Reach out to{' '}
               <a
                 href="https://benfasoli.com"
                 className="text-primary-400 font-bold"
