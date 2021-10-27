@@ -9,8 +9,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
 
   if (!session) {
-    res.status(403).end('Not authorized.');
+    res.status(403).end('Not authenticated.');
     return;
+  }
+
+  if (!session.role) {
+    res.status(401).end('Not authorized.');
   }
 
   switch (method) {

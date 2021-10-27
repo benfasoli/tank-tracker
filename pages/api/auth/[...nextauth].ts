@@ -43,7 +43,7 @@ export default NextAuth({
 
       console.log('Authenticated user:', { session, token });
 
-      return session;
+      return role ? session : null;
     },
     async jwt({ token, account, profile }) {
       const login = profile?.login || token.login;
