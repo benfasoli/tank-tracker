@@ -22,14 +22,15 @@ export default NextAuth({
 
   callbacks: {
     async signIn({ account, profile }) {
-      console.log('Attempting signin:', { account, profile });
+      console.log('Attempting signin:', { profile });
       const login = profile.login as string;
       const accessToken = account.access_token as string;
       const role = await getRole({
         login,
         accessToken,
       });
-      console.log('Authenticated user with role:', { role });
+
+      console.log('Authenticated user with role:', { login, role });
       return !!role;
     },
     async session({ session, token }) {
@@ -42,8 +43,7 @@ export default NextAuth({
       session.login = login;
       session.role = role;
 
-      console.log('Authenticated user:', { session, token });
-
+      console.log('Created session:', { session });
       return role ? session : null;
     },
     async jwt({ token, account, profile }) {
