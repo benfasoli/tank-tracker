@@ -258,11 +258,11 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: TankListProps) => {
       </ListBody>
 
       <div className="pt-4 border-t flex items-center space-x-4 justify-between p-4">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-400">
           Showing{' '}
-          <span className="font-medium text-gray-600">{rowIndexStart + 1}</span>{' '}
-          to <span className="font-medium text-gray-600">{rowIndexEnd}</span> of{' '}
-          <span className="font-medium text-gray-600">{rowCount}</span> results
+          <span className="font-medium text-gray-500">{rowIndexStart + 1}</span>{' '}
+          to <span className="font-medium text-gray-500">{rowIndexEnd}</span> of{' '}
+          <span className="font-medium text-gray-500">{rowCount}</span> results
         </p>
         <nav className="z-0 inline-flex rounded-md shadow-sm -space-x-px">
           <button
