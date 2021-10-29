@@ -218,11 +218,13 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: TankListProps) => {
                         {row.updatedAt}
                       </p>
 
-                      <StatusPill
-                        color={row.pressureStatusColor}
-                        className="mt-2 font-light text-xs">
-                        {row.pressure} psi
-                      </StatusPill>
+                      {row.pressure && (
+                        <StatusPill
+                          color={row.pressureStatusColor}
+                          className="mt-2 font-light text-xs">
+                          {row.pressure} psi
+                        </StatusPill>
+                      )}
                     </ListData>
 
                     <ListData className="ml-8 sm:ml-0 pl-2 sm:pl-4 col-span-12 sm:col-span-4 border-l">
