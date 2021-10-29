@@ -2,23 +2,44 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
-import ListBody from './ListBody';
-import ListContainer from './ListContainer';
-import ListData from './ListData';
-import ListHeader from './ListHeader';
-import ListItem from './ListItem';
 import Loader from './Loader';
 import StatusDot from './StatusDot';
 import StatusPill from './StatusPill';
 import TextIcon from './TextIcon';
 import { formatDate } from '../lib/date';
+import tw from 'tailwind-styled-components';
 import { useCurrentTanks } from '../hooks/tanks';
 
-type Props = {
-  searchQuery?: string;
-  sortBy: string;
-  sortAscending: boolean;
-};
+const ListBody = tw.ul`
+  text-left
+  text-xs
+  text-gray-600
+  whitespace-nowrap
+  divide-y
+  divide-gray-100
+`;
+
+const ListContainer = tw.div`
+  overflow-hidden
+`;
+
+const ListData = tw.div``;
+
+const ListHeader = tw.div`
+  bbg-gray-50
+  py-3
+  text-left
+  text-xs
+  font-medium
+  text-gray-600
+  tracking-wider
+  whitespace-nowrap
+  border-b
+`;
+
+const ListItem = tw.li`
+  py-1 sm:py-2
+`;
 
 const observations = [
   {
@@ -64,7 +85,13 @@ const observations = [
   },
 ];
 
-const TankList = ({ searchQuery, sortBy, sortAscending }: Props) => {
+type TankListProps = {
+  searchQuery?: string;
+  sortBy: string;
+  sortAscending: boolean;
+};
+
+const TankList = ({ searchQuery, sortBy, sortAscending }: TankListProps) => {
   const { tanks } = useCurrentTanks();
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -139,7 +166,7 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: Props) => {
 
   return (
     <ListContainer>
-      <ListHeader className="grid grid-cols-12 gap-4">
+      <ListHeader className="hidden sm:grid grid-cols-12 gap-4">
         <span className="col-span-8 sm:col-span-4">Tank ID</span>
         <span className="col-span-4">Last seen</span>
         <span className="col-span-4 hidden sm:block">Contains</span>

@@ -1,6 +1,5 @@
 import { TankRecord } from '../lib/tanks';
 import api from '../lib/api';
-import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 export function useTanks() {

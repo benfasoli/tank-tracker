@@ -8,6 +8,25 @@ type Props = {
   title?: string;
 };
 
+const Footer = () => (
+  <footer>
+    <Container>
+      <div className="my-6 text-gray-400 text-xs text-center font-light space-y-2 sm:flex justify-between">
+        <div>
+          Problem? Reach out to{' '}
+          <a
+            href="https://benfasoli.com"
+            className="text-primary-400 font-bold"
+            target="_blank">
+            Ben Fasoli 👋
+          </a>
+        </div>
+        <div>© {new Date().getFullYear()} All rights reserved</div>
+      </div>
+    </Container>
+  </footer>
+);
+
 const Layout = ({ children, title }: Props) => (
   <>
     <Head>
@@ -26,22 +45,7 @@ const Layout = ({ children, title }: Props) => (
       <main>
         <Container>{children}</Container>
       </main>
-      <footer>
-        <Container>
-          <div className="my-6 text-gray-400 text-xs text-center font-light space-y-2 sm:flex justify-between">
-            <div>
-              Problem? Reach out to{' '}
-              <a
-                href="https://benfasoli.com"
-                className="text-primary-400 font-bold"
-                target="_blank">
-                Ben Fasoli 👋
-              </a>
-            </div>
-            <div>© {new Date().getFullYear()} All rights reserved</div>
-          </div>
-        </Container>
-      </footer>
+      <Footer />
     </div>
   </>
 );

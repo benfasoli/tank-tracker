@@ -59,7 +59,7 @@ const TankRecordTable = ({ tankRecords }: Props) => {
   };
 
   return (
-    <div className="max-w-full overflow-x-scroll rounded-lg border shadow-sm">
+    <div className="max-w-full overflow-x-scroll rounded-lg sm:border sm:shadow-sm">
       <table>
         <thead className="bg-gray-50 text-left text-xs font-medium text-gray-700 tracking-wider border-b">
           <tr>

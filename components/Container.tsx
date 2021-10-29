@@ -6,7 +6,6 @@ const Container = tw.div`
   mx-auto
   px-4
   py-2
-  sm:px-6
 `;
 
 export default Container;
