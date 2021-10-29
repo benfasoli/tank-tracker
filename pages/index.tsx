@@ -19,7 +19,7 @@ export default function IndexPage() {
             type="text"
             name="search"
             id="search"
-            className="max-w-sm focus:ring-primary-500 focus:border-indigo-500 block w-full text-sm border-gray-300 rounded-md"
+            className="sm:max-w-sm focus:ring-primary-500 focus:border-indigo-500 block w-full text-sm border-gray-300 rounded-md"
             placeholder="Search"
             onChange={(event) => setSearchQuery(event.target.value)}
           />
