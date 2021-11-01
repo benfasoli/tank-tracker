@@ -116,6 +116,13 @@ const TankList = ({ searchQuery, sortBy, sortAscending }: TankListProps) => {
             return -1;
           }
         })
+        .sort((first, second) => {
+          if (first.tankId.toLowerCase() == searchQueryLower) {
+            return -1;
+          } else {
+            return 0;
+          }
+        })
         .map((tank) => {
           const updatedAt = formatDate(tank.updatedAt);
           const isEmpty = tank.pressure < 500;

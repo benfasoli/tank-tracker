@@ -44,7 +44,7 @@ const co2Fields: FieldData[] = [
   {
     key: 'co2',
     name: 'Mole fraction',
-    unit: 'ppm',
+    unit: 'X2019 ppm',
   },
   { key: 'co2Stdev', name: 'Standard deviation', unit: 'ppm' },
   { key: 'co2Sterr', name: 'Standard error', unit: 'ppm' },

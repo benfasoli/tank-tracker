@@ -9,7 +9,7 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <nav className="max-w-6xl mx-auto p-4 sm:px-6">
+    <nav className="max-w-6xl mx-auto p-4">
       <div className="flex align-center justify-between items-center">
         <Link href="/">
           <a>

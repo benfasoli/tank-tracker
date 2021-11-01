@@ -17,7 +17,7 @@ const FormRow = ({
   wide,
   disabled,
 }: FormRowProps) => (
-  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-100 py-5">
+  <div className="grid sm:grid-cols-3 sm:gap-4 items-start sm:border-t sm:border-gray-100 py-5">
     <label
       htmlFor={name}
       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
@@ -32,9 +32,7 @@ const FormRow = ({
       />
     </div>
     {unit && (
-      <span className="hidden sm:block text-xs font-medium text-gray-500 sm:mt-px sm:pt-2">
-        {unit}
-      </span>
+      <span className="text-xs font-medium text-gray-500 pt-2">{unit}</span>
     )}
   </div>
 );
