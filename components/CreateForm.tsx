@@ -107,9 +107,14 @@ const CreateForm = () => {
 
       <div className="pt-5 border-t border-gray-200">
         <div className="flex justify-end">
-          <Button type="button" onClick={handleFormSubmit}>
-            Save
-          </Button>
+          <div>
+            <Button type="button" onClick={handleFormSubmit}>
+              Save
+            </Button>
+            <div className="hidden sm:block text-gray-400 text-xs text-center mx-auto my-2">
+              ⌘ + s
+            </div>
+          </div>
         </div>
       </div>
     </form>
