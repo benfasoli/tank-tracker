@@ -8,8 +8,8 @@ import TankList from '../components/TankList';
 
 export default function IndexPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('tankId');
-  const [sortAscending, setSortAscending] = useState(true);
+  const [sortBy, setSortBy] = useState('updatedAt');
+  const [sortAscending, setSortAscending] = useState(false);
 
   return (
     <div>
@@ -47,10 +47,10 @@ export default function IndexPage() {
               className="focus:ring-primary-500 focus:border-indigo-500 text-sm border-gray-300 rounded-md"
               value={sortBy}
               onChange={(event) => setSortBy(event.target.value)}>
-              <option value="tankId">Tank ID</option>
               <option value="updatedAt">Updated at</option>
-              <option value="pressure">Pressure</option>
               <option value="location">Location</option>
+              <option value="pressure">Pressure</option>
+              <option value="tankId">Tank ID</option>
               <option value="co2">CO2</option>
               <option value="ch4">CH4</option>
               <option value="co">CO</option>
