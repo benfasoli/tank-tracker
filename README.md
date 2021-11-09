@@ -1,6 +1,6 @@
 # Tank Tracker
 
-This repo contains source code for the tanktracker.benfasoli.com web app.
+This repo contains source code for the [tanktracker.benfasoli.com](https://tanktracker.benfasoli.com) web app.
 
 ## Development
 
